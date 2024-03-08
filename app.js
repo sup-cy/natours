@@ -14,10 +14,16 @@ const bookingRouter = require('./routes/bookingRoutes');
 const AppError = require('./utils/appErroe');
 const globalErrorHandler = require('./controllers/errorController');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const app = express();
+app.enable('trust proxy');
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
+
+//Implement Cors
+app.use(cors());
+app.options('*', cors());
 //set security HTTP headers
 app.use(helmet());
 // Further HELMET configuration for Security Policy (CSP)
