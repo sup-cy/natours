@@ -9,7 +9,7 @@ const signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECREAT, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
-const createSendToken = (user, statusCode, res) => {
+const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
   const cookieOptions = {
     expires: new Date(
@@ -41,7 +41,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   });
   const url = `${req.protocol}://${req.get('host')}/me`;
   await new Email(newUser, url).sendWelcome();
-  createSendToken(newUser, 201, res);
+  createSendToken(newUser, 201, req, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -186,7 +186,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   //update change password at for the user
 
   //log the user send JWT
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
@@ -200,5 +200,5 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   user.passwordConfirm = req.body.passwordConfirm;
   await user.save();
   //log user in sen JWT
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
