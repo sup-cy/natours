@@ -15,6 +15,7 @@ const AppError = require('./utils/appErroe');
 const globalErrorHandler = require('./controllers/errorController');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const { webhookCheckout } = require('./controllers/bookingController');
 
 const app = express();
 //app.enable('trust proxy');
@@ -59,7 +60,7 @@ app.use(
       workerSrc: ["'self'", 'blob:', 'https://m.stripe.network'],
       objectSrc: [],
       imgSrc: ["'self'", 'blob:', 'data:', 'https:'],
-      fontSrc: ["'self'", ...fontSrcUrls],
+      fontSrc: ["'self'", 'data:', ...fontSrcUrls],
       frameSrc: ["'self'", 'https://js.stripe.com'],
     },
   }),
@@ -79,7 +80,12 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again in an hour',
 });
 app.use('/api', limiter);
-
+//we need the body in raw form not json form
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  webhookCheckout,
+);
 //body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
