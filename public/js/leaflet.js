@@ -25,6 +25,5 @@ export const displayMap = (locations) => {
 
   const bounds = L.latLngBounds(points).pad(0.5);
   map.fitBounds(bounds);
-
   map.scrollWheelZoom.disable(); //to disable zoom by mouse wheel
 };

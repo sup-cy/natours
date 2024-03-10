@@ -1,6 +1,11 @@
 {
   "extends": ["airbnb", "prettier", "plugin:node/recommended"],
   "plugins": ["prettier"],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
+  },
   "rules": {
     "prefer-object-spread": "off",
     "prettier/prettier": "error",
@@ -19,11 +24,6 @@
       "error",
       { "argsIgnorePattern": "req|res|next|val|err" }
     ],
-    "prefer-arrow-callback": "off",
-    "parser": "babel-eslint",
-    "parserOptions": {
-      "sourceType": "module",
-      "allowImportExportEverywhere": true
-    }
+    "prefer-arrow-callback": "off"
   }
 }

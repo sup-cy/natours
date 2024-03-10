@@ -4,6 +4,7 @@ import { login, logout } from './login';
 import { displayMap } from './leaflet';
 import { updateUserDate, updatePassword } from './updateSettings';
 import { bookTour } from './stripe';
+import { showAlert } from './alerts';
 //DOM Element
 const map = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
@@ -58,3 +59,6 @@ if (bookBtn) {
     bookTour(tourId);
   });
 }
+
+const alertMessage = document.querySelector('body').dataset.alert;
+if (alertMessage) showAlert('success', alertMessage, 15);
