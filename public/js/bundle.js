@@ -2134,11 +2134,11 @@
     if (el)
       el.parentElement.removeChild(el);
   };
-  var showAlert = (type, msg) => {
+  var showAlert = (type, msg, time = 5) => {
     hideAlert();
     const markup = `<div class="alert alert--${type}">${msg}</div>`;
     document.querySelector("body").insertAdjacentHTML("afterbegin", markup);
-    window.setTimeout(hideAlert, 3e3);
+    window.setTimeout(hideAlert, time * 1e3);
   };
 
   // public/js/login.js
@@ -2306,4 +2306,7 @@
       bookTour(tourId);
     });
   }
+  var alertMessage = document.querySelector("body").dataset.alert;
+  if (alertMessage)
+    showAlert("success", alertMessage, 15);
 })();
